@@ -1,4 +1,5 @@
 package giasuomt.demo.person.model;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ import lombok.Setter;
 @Setter
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class Person extends AbstractEntity {
-    @Size(min = 3, max = 50, message = "{user.username.size}")
-    @Column(unique = true) //để các giá trị username ko được trùng nhau
-    private String username;
-    
-    private String password;
-    
-    private String registeredStatus;
+//    @Size(min = 3, max = 50, message = "{user.username.size}")
+//    @Column(unique = true) //để các giá trị username ko được trùng nhau
+	private String username;
+
+	private String password;
+
+	private String registeredStatus;
 
 //THÔNG TIN CÁ NHÂN
 	// @NotBlank
@@ -103,12 +104,12 @@ public class Person extends AbstractEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rel_area_id")
 	private Area relArea;
-	
+
 //MEDIA	
 	private String avatars;
-	
+
 	private String publicImgs;
-	
+
 	private String privateImgs;
 
 //HIỆN ĐANG LÀ
@@ -123,10 +124,10 @@ public class Person extends AbstractEntity {
 
 	@OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SchoolTeacher> schoolTeachers = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Schooler> schoolers = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Worker> workers = new ArrayList<>();
 
@@ -135,13 +136,13 @@ public class Person extends AbstractEntity {
 	@NotBlank
 	// @Column(unique = true)
 	private String tutorCode; // Cần viết tự generate theo dạng 8 số
-	
+
 	@OneToMany(mappedBy = "personA", cascade = CascadeType.ALL)
 	private Set<Relationship> relationshipWith;
-		
+
 	@OneToMany(mappedBy = "personB", cascade = CascadeType.ALL)
 	private Set<Relationship> relationshipBy;
-		
+
 //TUTOR:
 	private String voices;
 
@@ -163,27 +164,33 @@ public class Person extends AbstractEntity {
 
 //LEARNER/REGISTER
 	private String learnerNotices;
-	
-    @OneToMany(mappedBy = "register", fetch = FetchType.LAZY)
-    @JsonIgnore  //Để JSP ignore cột này khi truy vấn, để ko bị lập vô tận
-    private Set<Task> registeredTasks;
-    
-    @ManyToMany(mappedBy = "learners", fetch = FetchType.LAZY)
-    @JsonIgnore  //Để JSP ignore cột này khi truy vấn, để ko bị lập vô tận
-    private Set<Task> learnedTasks = new HashSet<>();
 
-    
+	@OneToMany(mappedBy = "register", fetch = FetchType.LAZY)
+	@JsonIgnore // Để JSP ignore cột này khi truy vấn, để ko bị lập vô tận
+	private Set<Task> registeredTasks;
 
+	@ManyToMany(mappedBy = "learners", fetch = FetchType.LAZY)
+	@JsonIgnore // Để JSP ignore cột này khi truy vấn, để ko bị lập vô tận
+	private Set<Task> learnedTasks = new HashSet<>();
 
+	public void addSchooler(Schooler schooler) {
+		schooler.setPerson(this);
+		this.schoolers.add(schooler);
+	}
 
-    
-    
-    
-    
-    
-    
-    
-    
+	public void removeSchooler(Schooler schooler) {
+		this.schoolers.remove(schooler);
+	}
+
+	public void addWorker(Worker worker) {
+		worker.setPerson(this);
+		this.workers.add(worker);
+	}
+
+	public void removeWorker(Worker worker) {
+		this.workers.remove(worker);
+	}
+
 	public void addStudent(Student student) {
 		student.setPerson(this);
 		this.students.add(student);

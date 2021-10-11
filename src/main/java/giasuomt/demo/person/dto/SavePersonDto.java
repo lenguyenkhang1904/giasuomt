@@ -66,5 +66,11 @@ public class SavePersonDto extends SaveUserDto {
 	// luu School Teacher
 	private List<SaveSchoolTeacherDto> saveSchoolTeacherDtos = new ArrayList<>();
 	
+	//luu schooler
+	private List<SaveSchoolerDto> saveSchoolerDtos=new ArrayList<>();
+	
+	//luu workers
+	private List<SaveWorkerDto> saveWorkerDtos=new ArrayList<>();
+	
 	// RegisteredUser
 }

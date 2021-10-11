@@ -1,4 +1,5 @@
 package giasuomt.demo.person.service;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import giasuomt.demo.commondata.generic.GenericService;
@@ -8,6 +9,7 @@ import giasuomt.demo.person.dto.SaveGraduatedStudentDto;
 import giasuomt.demo.person.dto.SaveInstitutionTeacherDto;
 import giasuomt.demo.person.dto.SavePersonDto;
 import giasuomt.demo.person.dto.SaveSchoolTeacherDto;
+import giasuomt.demo.person.dto.SaveSchoolerDto;
 import giasuomt.demo.person.dto.SaveStudentDto;
 import giasuomt.demo.person.model.GraduatedStudent;
 import giasuomt.demo.person.model.InstitutionTeacher;
@@ -180,6 +182,29 @@ public class PersonService extends GenericService<Person, Long> implements IPers
 					person.addSchoolTeacher(schoolTeacher);	
 				}
 			}
+			
+			List<SaveSchoolerDto> saveSchoolerDtos=dto.getSaveSchoolerDtos();
+			for(int i=0;i<person.getSchoolers().size();i++)
+			{
+				boolean deleteThis=true;
+				for(int j=0;j<saveSchoolerDtos.size();j++)
+				{
+					if(person.getSchoolers().get(i).getId()== saveSchoolerDtos.get(j).getId())
+						deleteThis=false;
+				}
+				if(deleteThis)
+				{
+					person.removeSchooler(person.getSchoolers().get(i));//delete
+					i--;// vi sau khi remove thi trong element no tru di
+				}
+			}
+			for(int i=0;i<saveSchoolerDtos.size();i++)
+			{
+				SaveSchoolerDto saveSchoolerDto=saveSchoolerDtos.get(i);
+				
+			}
+			
+			
 
 			return iPersonRepository.save(person);
 			
