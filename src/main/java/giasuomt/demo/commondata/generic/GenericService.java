@@ -43,4 +43,9 @@ public abstract class GenericService<T extends AbstractEntity, ID> implements IG
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Area finddById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

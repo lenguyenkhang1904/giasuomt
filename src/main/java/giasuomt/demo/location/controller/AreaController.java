@@ -1,6 +1,7 @@
 package giasuomt.demo.location.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -82,10 +83,10 @@ public class AreaController {
 	}
 	
 	
-	@GetMapping("/findLearnerAndRegistersById/{area-id}")
+	@GetMapping("/{area-id}")
 	public ResponseEntity<Object> findLearnerAndRegistersById(@PathVariable("area-id") Long areaId){
-		Set<LearnerAndRegister> learnerAndRegisters = service.findLearnerAndRegistersById(areaId);
-		if(learnerAndRegisters == null)
+		Area learnerAndRegisters = service.finddById(areaId);
+		if(areaId==null)
 			return ResponseHandler.getResponse("There is no data.",HttpStatus.OK);
 		return  ResponseHandler.getResponse(learnerAndRegisters, HttpStatus.OK); //Trả về roles, kèm theo HttpStatus OK
 	}

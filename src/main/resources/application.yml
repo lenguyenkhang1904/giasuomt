@@ -12,5 +12,12 @@ spring:
     show-sql: true #để xem câu sql mà nó tự sinh
     generate-ddl: true #để thằng Hibernate tự nhìn Object và tạo database được
     hibernate:
-      ddl-auto: update
-
+      ddl-auto: update  redis:    host: localhost
+    port: 6379
+    timeout: 10000ms
+    lettuce:      pool:        max-active: 8 
+        max-idle: 8
+        min-idle: 8
+        max-wait: -1ms  cache:    type: redis
+    redis:      cache-null-values: false
+      time-to-live: 30

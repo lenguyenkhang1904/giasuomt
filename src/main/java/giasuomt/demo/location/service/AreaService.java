@@ -8,6 +8,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.util.concurrent.ExecutionError;
@@ -24,6 +27,7 @@ import giasuomt.demo.location.repository.AreaRepository;
 
 
 @Service
+@CacheConfig(cacheNames = "areaCache")
 public class AreaService extends GenericService<Area, Long> implements IareaService {
 	@Autowired
 	private AreaRepository repository;
@@ -34,11 +38,15 @@ public class AreaService extends GenericService<Area, Long> implements IareaServ
 	
 	
 	//API TRẢ VỀ LIST TẤT CẢ ((Ignore List Account))
+	
+	@Cacheable(cacheNames = "areas")
 	public List<Area> findAll() {
+		waitSomeTime();
 		return repository.findAll();
 	}
 	
 	//POST
+	@CacheEvict(cacheNames = "areas",allEntries = true)
 	public Area save(CreateAreaDTO dto) {
 		Area area=new Area();
 		
@@ -78,6 +86,7 @@ public class AreaService extends GenericService<Area, Long> implements IareaServ
 	}
 	//Update
 	@Override
+	@CacheEvict(cacheNames = "area", allEntries = true)
 	public Area update(UpdateAreaDTO dto) {
 		// TODO Auto-generated method stub
 		Area areaUpdate=repository.getOne(dto.getIdArea());
@@ -95,7 +104,7 @@ public class AreaService extends GenericService<Area, Long> implements IareaServ
 		
 		return repository.save(areaUpdate);
 		
-	}
+	}   
 	//findByNationAndProvincialLevelAndDistrictAndCommune
 	@Override 
 	public List<Area> findByNationAndProvincialLevelAndDistrictAndCommune(FindingDtoArea dtoArea) {
@@ -111,7 +120,21 @@ public class AreaService extends GenericService<Area, Long> implements IareaServ
 		return learnerAndRegisters;
 	}
 
+	private void waitSomeTime() {
+		System.out.println("Long Wait Begin");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Long Wait End");
+	}
+	@Cacheable(cacheNames = "area", key = "#id", unless = "#result == null")
+	@Override
+	public Area finddById(Long id) {
+		return repository.getOne(id);
+	}
 	
 	
-
+	
 }

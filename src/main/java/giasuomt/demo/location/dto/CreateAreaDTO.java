@@ -10,9 +10,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@CheckIfNationAndStateCanBeNULL
-@CheckIfNationWithBasicInfo
-@CheckDuplicateProvincialLevelAnđistrictAndCommune
 public class CreateAreaDTO {
 	
 	protected String nation;
