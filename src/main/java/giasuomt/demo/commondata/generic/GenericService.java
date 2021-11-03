@@ -13,6 +13,7 @@ public abstract class GenericService<DTO, T extends AbstractEntity, ID> implemen
 	private JpaRepository<T, ID> repository; // Cần phải viết @Component GenericRepository (viết ở trong JpaConfig.java)
 												// nó mới inject cái repository này được
 	
+
 	@Override
 	public List<T> findAll() {
 		return repository.findAll();
@@ -33,7 +34,7 @@ public abstract class GenericService<DTO, T extends AbstractEntity, ID> implemen
 
 	}
 
-	@Cacheable(value = "areas", key = "#id")
+	//@Cacheable(value = "areas", key = "#id")
 	@Override
 	public Optional<T> findById(ID id) {
 		return repository.findById(id);

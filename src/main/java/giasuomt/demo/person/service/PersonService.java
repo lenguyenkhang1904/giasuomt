@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +54,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+@CacheConfig(cacheNames = "personCache")
 public class PersonService extends GenericService<SavePersonDto, Person, Long> implements IPersonService {
 
 	private MapDtoToModel mapDtoToModel;
@@ -79,6 +84,7 @@ public class PersonService extends GenericService<SavePersonDto, Person, Long> i
 	private IFileEntityRepository iFileEntityRepository;
 
 	@Override
+	@Cacheable(value = "persons")
 	public List<Person> findAll() {
 		return iPersonRepository.findAll();
 	}
@@ -90,6 +96,7 @@ public class PersonService extends GenericService<SavePersonDto, Person, Long> i
 		return save(dto, person);
 	}
 
+	@CachePut(value = "person", key = "#dto.getId()")
 	@Override
 	public Person update(SavePersonDto dto) {
 
