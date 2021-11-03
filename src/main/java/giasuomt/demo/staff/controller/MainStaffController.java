@@ -22,7 +22,11 @@ import lombok.AllArgsConstructor;
 public class MainStaffController {
 	
 
+<<<<<<< Updated upstream
 	 
+=======
+	   
+>>>>>>> Stashed changes
 	private IMainStaffService mainStaffService;
 	
 	@GetMapping("/findAll")
