@@ -41,14 +41,8 @@ gsomt:
   app:
     jwt-secret: apiofgsomt
     jwt-duration: 3000000 
-logging:
-  level:
-    root: info
-    org.springframework: debug
-    '[giasuomt.backend.api]': DEBUG
-  pattern:
-    dateformat: yyyy-MM-dd HH:mm:ss
 
+    
 amazon:
   accessKeyKhangAdmin: V61PV4PFI9CO5SDX0FVW                #tạo user
   secretkeyKhangAdmin: wzbD58XR7odCJoR6XDC1t7EIa83QNYfVYjY2PHAq
