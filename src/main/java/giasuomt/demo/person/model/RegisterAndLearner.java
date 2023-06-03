@@ -8,30 +8,21 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GeneratorType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import giasuomt.demo.commondata.model.Person;
 import giasuomt.demo.location.model.RegisterAndLearnerAddress;
-import giasuomt.demo.location.model.TaskPlaceAddress;
-import giasuomt.demo.tags.model.RegisterAndLearnerTag;
-import giasuomt.demo.task.model.Application;
 import giasuomt.demo.task.model.Registration;
-import giasuomt.demo.task.model.Task;
 import giasuomt.demo.user.model.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +35,7 @@ import lombok.Setter;
 @NamedEntityGraph(name = "registerAndLearner", attributeNodes = {
 
 		@NamedAttributeNode("publicImgs"), @NamedAttributeNode("privateImgs"),
-		@NamedAttributeNode("registerAndLearnerAddresses"), @NamedAttributeNode("registerAndLearnerTags"),
+		@NamedAttributeNode("registerAndLearnerAddresses"),
 		@NamedAttributeNode("relationshipWith"),
 
 })
@@ -72,10 +63,7 @@ public class RegisterAndLearner extends Person {
 	@OneToMany(mappedBy = "registerAndLearner", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Schooler> schoolers = new LinkedList<>();
 
-	// TAGS
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "register_and_learner_register_and_learner_tag", joinColumns = @JoinColumn(name = "register_and_learner_id"), inverseJoinColumns = @JoinColumn(name = "register_and_learner_tag_id"))
-	private Set<RegisterAndLearnerTag> registerAndLearnerTags = new HashSet<>();
+    private String registerAndLearnerTags;
 
 	// RegisterAndLearner RELATIONSHIP:
 	@OneToMany(mappedBy = "personA", cascade = CascadeType.ALL, orphanRemoval = true)

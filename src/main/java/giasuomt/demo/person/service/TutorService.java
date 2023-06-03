@@ -1,19 +1,13 @@
 package giasuomt.demo.person.service;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.google.common.collect.Sets;
 
@@ -35,8 +29,6 @@ import giasuomt.demo.person.model.Tutor;
 import giasuomt.demo.person.repository.ITutorRepository;
 import giasuomt.demo.role.model.Role;
 import giasuomt.demo.security.jwt.JwtUltils;
-import giasuomt.demo.tags.model.TutorTag;
-import giasuomt.demo.tags.repository.ITutorTagRepository;
 import giasuomt.demo.task.dto.UpdateSubjectGroupForSureDto;
 import giasuomt.demo.task.dto.UpdateSubjectGroupMaybeDto;
 import giasuomt.demo.tutorReview.dto.TutorReviewDtoForWeb;
@@ -60,8 +52,6 @@ public class TutorService extends GenericService<SaveTutorDto, Tutor, Long> impl
 	private ITutorRepository iTutorRepository;
 
 	private IAreaRepository iAreaRepository;
-
-	private ITutorTagRepository iTutorTagRepository;
 
 	private ISubjectGroupRepository iSubjectGroupRepository;
 
@@ -120,7 +110,6 @@ public class TutorService extends GenericService<SaveTutorDto, Tutor, Long> impl
 		try {
 
 			Set<Area> areas = Sets.newHashSet(iAreaRepository.findAll());
-			Set<TutorTag> tutorTags = Sets.newHashSet(iTutorTagRepository.findAll());
 			Set<Tutor> tutors = new HashSet<>();
 			dtos.parallelStream().forEach(dto -> {
 				Tutor tutor = new Tutor();
@@ -142,20 +131,6 @@ public class TutorService extends GenericService<SaveTutorDto, Tutor, Long> impl
 
 				tutor.setRelArea(tutorRelAreas);
 				tutor.setExp(0.0);
-
-				// Tags
-				Set<String> tutorTagIds = dto.getTutorTagIds();
-				Set<TutorTag> tutorTagTemps = new HashSet<>();
-
-				for (String id : tutorTagIds) {
-					boolean check = false;
-					for (TutorTag tutorTag : tutorTags) {
-						if (id.equals(tutorTag.getId())) {
-							tutorTagTemps.add(tutorTag);
-						}
-					}
-				}
-				tutor.setTutorTags(tutorTagTemps);
 
 				tutors.add(tutor);
 			});
@@ -231,14 +206,6 @@ public class TutorService extends GenericService<SaveTutorDto, Tutor, Long> impl
 //			}
 //		}
 		// Tags
-		Set<String> tutorTagIds = dto.getTutorTagIds();
-		Set<TutorTag> tutorTags = new HashSet<>();
-
-		for (String id : tutorTagIds) {
-			Optional<TutorTag> tutorTag = iTutorTagRepository.findById(id);
-			tutorTags.add(tutorTag.get());
-		}
-		tutor.setTutorTags(tutorTags);
 
 		// voice
 

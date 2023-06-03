@@ -3,19 +3,15 @@ package giasuomt.demo.person.model;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.LinkedList;
-
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,24 +22,21 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import giasuomt.demo.commondata.model.Person;
 import giasuomt.demo.commondata.util.Calendar;
 import giasuomt.demo.commondata.util.DateTimeUtils;
 import giasuomt.demo.educational.model.SubjectGroup;
 import giasuomt.demo.job.model.Job;
 import giasuomt.demo.location.model.Area;
-import giasuomt.demo.tags.model.TutorTag;
 import giasuomt.demo.task.model.Application;
-import giasuomt.demo.task.model.Task;
 import giasuomt.demo.tutorReview.model.TutorReview;
 import giasuomt.demo.user.model.User;
 import lombok.Getter;
@@ -54,20 +47,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
-@NamedEntityGraph(name = "tutor",attributeNodes = {
-	
-		@NamedAttributeNode("calendars"),
-		@NamedAttributeNode("hienDangLa"),
-		@NamedAttributeNode("tutorTags"),
-		@NamedAttributeNode("relArea"),
-		@NamedAttributeNode("tutorAddressArea"),
-		@NamedAttributeNode("subjectGroupMaybes"),
-		@NamedAttributeNode("subjectGroupSures"),
-		@NamedAttributeNode("publicImgs"),
-		@NamedAttributeNode("privateImgs"),
-		@NamedAttributeNode("voices")
-		
-})
 public class Tutor extends Person { 
 	// @Column(updatable = false) //Column này ko update được
 	// @Column(unique = true)
@@ -136,9 +115,7 @@ public class Tutor extends Person {
 
 	private String voices;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "tutor_tutor_tag", joinColumns = @JoinColumn(name = "tutor_id"), inverseJoinColumns = @JoinColumn(name = "tutor_tag_id"))
-	private Set<TutorTag> tutorTags = new HashSet<>();
+	private String tutorTag;
 
 	private String tutorNotices;
 
@@ -209,7 +186,7 @@ public class Tutor extends Person {
 				+ ", publicImgs=" + publicImgs + ", privateImgs=" + privateImgs + ", expNotices=" + expNotices
 				+ ", hienDangLa=" + hienDangLa + ", nowLevel=" + nowLevel + ", nowLevelUpdatedAt=" + nowLevelUpdatedAt
 				+ ", studyingInsitution=" + studyingInsitution + ", teachingInstitution=" + teachingInstitution
-				+ ", major=" + major + ", voices=" + voices + ", tutorTags=" + tutorTags + ", tutorNotices="
+				+ ", major=" + major + ", voices=" + voices + ", tutorTags=" + "" + ", tutorNotices="
 				+ tutorNotices + ", advantageNote=" + advantageNote + ", applications=" + applications + ", jobs="
 				+ jobs + ", exp=" + exp + ", user=" + user + ", subjectGroupMaybes=" + subjectGroupMaybes
 				+ ", subjectGroupSures=" + subjectGroupSures + ", subject=" + subject + ", subjectClass=" + subjectClass

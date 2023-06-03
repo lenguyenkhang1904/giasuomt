@@ -27,8 +27,6 @@ import giasuomt.demo.person.model.Schooler;
 import giasuomt.demo.person.repository.IRegisterAndLearnerRelationshipRepository;
 import giasuomt.demo.person.repository.IRegisterAndLearnerRepository;
 import giasuomt.demo.person.repository.ISchoolerRepository;
-import giasuomt.demo.tags.model.RegisterAndLearnerTag;
-import giasuomt.demo.tags.repository.IRegisterAndLearnerTagRepository;
 import giasuomt.demo.uploadfile.ultils.AwsClientS3;
 import giasuomt.demo.user.repository.IUserRepository;
 import lombok.AllArgsConstructor;
@@ -48,8 +46,6 @@ public class RegisterAndLearnerService extends GenericService<SaveRegisterAndLea
 	private IRegisterAndLearnerAddressRepository iRegisterAndLearnerAddressRepository;
 
 	private ISchoolerRepository iSchoolerRepository;
-
-	private IRegisterAndLearnerTagRepository iRegisterAndLearnerTagRepository;
 
 	private IRegisterAndLearnerRelationshipRepository iRegisterAndLearnerRelationshipRepository;
 
@@ -201,15 +197,6 @@ public class RegisterAndLearnerService extends GenericService<SaveRegisterAndLea
 				registerAndLearner.addRelationshipWith(registerAndLearnerRelationship);
 			}
 		}
-		// Tags
-		Set<Long> registerAndLearnerTagIds = dto.getRegisterAndLearnerTagIds();
-		Set<RegisterAndLearnerTag> registerAndLearnerTags = new HashSet<>();
-		for (Long  registerAndLearnerTagId : registerAndLearnerTagIds) {
-			RegisterAndLearnerTag registerAndLearnerTag = iRegisterAndLearnerTagRepository
-					.getOne(registerAndLearnerTagId);
-			registerAndLearnerTags.add(registerAndLearnerTag);
-		}
-		registerAndLearner.setRegisterAndLearnerTags(registerAndLearnerTags);
 		// Hiện đang là
 		List<SaveSchoolerDto> saveSchoolerDtos = dto.getSchoolers();
 		for (int i = 0; i < registerAndLearner.getSchoolers().size(); i++) {

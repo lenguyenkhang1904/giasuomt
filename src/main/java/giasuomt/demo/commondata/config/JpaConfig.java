@@ -1,17 +1,11 @@
 package giasuomt.demo.commondata.config;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Component;
-
-import giasuomt.demo.commondata.util.GetTypeName;
-import giasuomt.demo.person.model.Tutor;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorAware") 

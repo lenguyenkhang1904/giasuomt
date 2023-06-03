@@ -33,7 +33,7 @@ public class SaveRegisterAndLearnerDto extends SavePersonDto implements Serializ
 	
 	
 	// TAGS
-	private Set<Long> registerAndLearnerTagIds = new HashSet<>();
+	private String registerAndLearnerTags;
 	
 
 	private String note;

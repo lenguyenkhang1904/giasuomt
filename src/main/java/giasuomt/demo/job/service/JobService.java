@@ -1,18 +1,10 @@
 package giasuomt.demo.job.service;
 
 import java.util.HashSet;
-
-import java.util.LinkedList;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.amazonaws.services.rds.model.Option;
 
 import giasuomt.demo.commondata.generic.GenericService;
 import giasuomt.demo.commondata.generic.MapDtoToModel;
@@ -30,14 +22,11 @@ import giasuomt.demo.location.model.TaskPlaceAddress;
 import giasuomt.demo.person.Ultils.ExperienceForTutor;
 import giasuomt.demo.person.Ultils.UpdateSubjectGroupMaybeAndSure;
 import giasuomt.demo.person.model.Tutor;
-
 import giasuomt.demo.person.repository.ITutorRepository;
-import giasuomt.demo.tags.model.TutorTag;
 import giasuomt.demo.task.model.Application;
 import giasuomt.demo.task.model.Task;
 import giasuomt.demo.task.repository.IApplicationRepository;
 import giasuomt.demo.task.repository.ITaskRepository;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -90,12 +79,6 @@ public class JobService extends GenericService<SaveJobDto, Job, String> implemen
 				tutorByTheTimeCreatingJob);
 		tutorByTheTimeCreatingJob.setId(tutorId);
 		// Tutor Tags
-		Set<String> tutorTags = new HashSet<>();
-		for (TutorTag tutortag : iTutorRepository.getOne(tutorId).getTutorTags()) {
-			String attributeOfTutorTags = tutortag.toString();
-			tutorTags.add(attributeOfTutorTags);
-		}
-		tutorByTheTimeCreatingJob.setTutorTags(tutorTags);
 		job.setId(dto.getApplicationId().concat("-job"));
 		job.setTutorByTheTimeCreatingJob(tutorByTheTimeCreatingJob);
 		iTutorByTheTimeCreatingJobRepository.save(tutorByTheTimeCreatingJob);

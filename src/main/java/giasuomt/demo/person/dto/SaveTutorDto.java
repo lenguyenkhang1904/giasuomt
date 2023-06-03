@@ -60,7 +60,7 @@ public class SaveTutorDto extends SavePersonDto implements Serializable {
 	private String major;
 
 	// TAGS
-	private Set<String> tutorTagIds = new HashSet<>();
+	private String tutorTag;
 
 	private String nowLevel;
 

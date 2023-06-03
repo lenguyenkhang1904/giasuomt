@@ -41,9 +41,7 @@ import lombok.Setter;
 subgraphs = {
 		@NamedSubgraph(name="tutor-subclass",
 				attributeNodes = {
-					
-					
-						@NamedAttributeNode("tutorTags"),
+				
 						@NamedAttributeNode("relArea"),
 						@NamedAttributeNode("tutorAddressArea"),
 						@NamedAttributeNode("subjectGroupMaybes"),

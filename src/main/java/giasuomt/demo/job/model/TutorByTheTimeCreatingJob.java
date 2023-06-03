@@ -47,6 +47,5 @@ public class TutorByTheTimeCreatingJob extends AbstractEntityNotId {
 	private String infoImgs;
 	private String tutorNotices;
 	private String advantageNote;
-	@ElementCollection
-	private Set<String> tutorTags = new HashSet<>();
+	private String tutorTag;
 }
